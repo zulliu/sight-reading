@@ -1,0 +1,11 @@
+{
+  "notes": [
+    { "note": "C", "images": ["C1.png", "C2.png", "C3.png", "C4.png"] },
+    { "note": "D", "images": ["D1.png", "D2.png", "D3.png", "D4.png"] },
+    { "note": "E", "images": ["E1.png", "E2.png", "E3.png"] },
+    { "note": "F", "images": ["F1.png", "F2.png", "F3.png", "F4.png"] },
+    { "note": "G", "images": ["G1.png", "G2.png", "G3.png", "G4.png"] },
+    { "note": "A", "images": ["A1.png", "A2.png", "A3.png"] },
+    { "note": "B", "images": ["B1.png", "B2.png", "B3.png", "B4.png"] }
+  ]
+}
