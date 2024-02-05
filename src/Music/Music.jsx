@@ -56,21 +56,30 @@ function Music({ onQuizFinish }) {
 
   return (
     <>
-      <Card className="mt-6 w-full flex flex-col items-center justify-center">
-        <CardHeader color="blue-gray" className="relative h-80 w-68 mx-0">
+      <Card className="mt-6 w-full flex flex-col items-center justify-center shadow-none">
+        <CardHeader
+          color="blue-gray"
+          floated={false}
+          shadow={false}
+          className="relative h-72 w-72 mx-0 mt-[-2rem]"
+        >
           <img src={currentNote.selectedImage} alt="note" />
         </CardHeader>
         <CardBody>
-          <Typography variant="h5" color="blue-gray" className="mb-2">
+          <Typography
+            variant="h5"
+            color="blue-gray"
+            className="mb-2 font-lobster"
+          >
             What's this note?
           </Typography>
         </CardBody>
         <CardFooter className="pt-0">
-          <ButtonGroup className="gap-1 p-1">
+          <ButtonGroup className="gap-1 p-1 mt-[-1rem]">
             {['C', 'D', 'E', 'F'].map((note) => (
               <Button
                 key={note}
-                className="rounded-none"
+                className="rounded-full"
                 onClick={() => handleNoteSelection(note)}
               >
                 {note}
@@ -81,7 +90,7 @@ function Music({ onQuizFinish }) {
             {['G', 'A', 'B'].map((note) => (
               <Button
                 key={note}
-                className="rounded-none"
+                className="rounded-full"
                 onClick={() => handleNoteSelection(note)}
               >
                 {note}

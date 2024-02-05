@@ -4,7 +4,8 @@ import './App.css';
 import Music from './Music/Music';
 import Timer from './Music/Timer';
 import StartPage from './Music/StartPage';
-import { Button, Typography } from '@material-tailwind/react';
+import QuizSummary from './Music/QuizSummary';
+import { Button } from '@material-tailwind/react';
 
 function App() {
   const [quizStarted, setQuizStarted] = useState(false);
@@ -31,25 +32,21 @@ function App() {
     setFinalTime(0);
   };
   return (
-    <div className="w-80">
+    <div className="flex flex-col items-center justify-center min-h-screen w-full">
       {!quizStarted && !quizFinished && <StartPage onStart={handleQuizStart} />}
 
       {quizStarted && (
         <>
           <Timer quizStarted={quizStarted} onTimeUpdate={handleTimeUpdate} />
           <Music onQuizFinish={onQuizFinish} />
-          <Button onClick={handleRestart} color="green">
+          <Button onClick={handleRestart} variant="outlined" className="mt-4">
             Restart Practice
           </Button>
         </>
       )}
       {quizFinished && (
         <>
-          <Typography variant="h3">
-            Hooray, you got 10 notes correct in {finalTime} seconds. Try again?
-          </Typography>
-          <br />
-          <Button onClick={handleQuizStart}>Restart Quiz</Button>
+          <QuizSummary finalTime={finalTime} handleRestart={handleRestart} />
         </>
       )}
     </div>

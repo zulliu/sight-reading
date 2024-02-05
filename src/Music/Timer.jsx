@@ -1,6 +1,5 @@
-// Timer.jsx
 import { useState, useEffect } from 'react';
-import { Button, ButtonGroup } from '@material-tailwind/react';
+import { Typography } from '@material-tailwind/react';
 
 function Timer({ quizStarted, onTimeUpdate }) {
   const [time, setTime] = useState(0);
@@ -10,18 +9,20 @@ function Timer({ quizStarted, onTimeUpdate }) {
 
     if (quizStarted) {
       interval = setInterval(() => {
-        setTime((time) => {
-          const newTime = time + 1;
-          onTimeUpdate(newTime);
-          return newTime;
-        });
+        setTime((time) => time + 1);
       }, 1000);
     } else {
       clearInterval(interval);
     }
 
     return () => clearInterval(interval);
-  }, [quizStarted, onTimeUpdate]);
+  }, [quizStarted]);
+
+  useEffect(() => {
+    if (quizStarted) {
+      onTimeUpdate(time);
+    }
+  }, [time, quizStarted, onTimeUpdate]);
 
   useEffect(() => {
     if (!quizStarted) {
@@ -31,7 +32,9 @@ function Timer({ quizStarted, onTimeUpdate }) {
 
   return (
     <div className="flex justify-center items-center flex-col mt-4">
-      <div className="text-2xl font-semibold mb-4">Time: {time} seconds</div>
+      <Typography variant="h3" className="mb-4 font-lobster">
+        Time: {time} seconds
+      </Typography>
     </div>
   );
 }

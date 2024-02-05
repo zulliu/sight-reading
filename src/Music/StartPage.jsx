@@ -26,19 +26,19 @@ function StartPage({ onStart }) {
     <div className="flex justify-center items-center flex-col h-screen">
       {countdown === null ? (
         <>
-          <Typography variant="h2">Sight Reading Challenge</Typography>
+          <Typography variant="h1" className="font-lobster">
+            Sight Reading Challenge
+          </Typography>
           <br />
-          <Typography variant="h4" className="" color="gray">
+          <Typography className="" color="gray">
             Are you ready?
           </Typography>
 
           <br />
-          <Button color="green" onClick={startCountdown}>
-            Start
-          </Button>
+          <Button onClick={startCountdown}>Start</Button>
         </>
       ) : (
-        <Typography variant="h1" color="blue">
+        <Typography variant="h1" color="blue" className="font-lobster">
           {countdown > 0 ? countdown : 'Go!'}
         </Typography>
       )}
