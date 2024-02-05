@@ -1,45 +1,57 @@
-import React from 'react';
 import { Typography, Button } from '@material-tailwind/react';
 
-function QuizSummary({ finalTime, handleRestart }) {
-  const { level, comment } = getLevel(finalTime);
+function QuizSummary({ finalTime, finalScore, handleRestart }) {
+  const { level, comment } = getLevel(
+    calculateFinalScore(finalScore, finalTime),
+  );
+  function calculateFinalScore(baseScore, finalTime) {
+    let timeBonus = 0;
+    if (finalTime <= 15) timeBonus = 30;
+    else if (finalTime <= 22) timeBonus = 15;
+    else if (finalTime <= 29) timeBonus = 10;
+    else if (finalTime <= 36) timeBonus = 5;
+    // No bonus for tier 5 and below
 
-  function getLevel(finalTime) {
-    if (finalTime <= 15) {
+    return baseScore + timeBonus;
+  }
+
+  function getLevel(score) {
+    // Define score thresholds for levels
+    if (score >= 90) {
       return {
         level: 'Maestro',
         comment:
-          "Bravo! Your tempo and precision are music to our ears. You're conducting the orchestra of champions.",
+          "Bravo! Your tempo and precision are music to our ears. You're leading the symphony of success.",
       };
-    } else if (finalTime <= 22) {
+    } else if (score >= 75) {
       return {
         level: 'Virtuoso',
         comment:
-          "A standing ovation! Your skills are hitting every note with perfection. You're a soloist in the symphony of greatness.",
+          "A standing ovation! You're playing every note with perfection. The stage of greatness awaits.",
       };
-    } else if (finalTime <= 29) {
+    } else if (score >= 60) {
       return {
         level: 'Harmonizer',
         comment:
-          "Encore! You're orchestrating your way to the top, blending skills and passion with each note.",
+          "Encore! Your skills harmonize beautifully with your ambition. You're a rising star.",
       };
-    } else if (finalTime <= 36) {
+    } else if (score >= 45) {
       return {
         level: 'Melodist',
         comment:
-          "You've got rhythm! There's melody in your method, but the symphony awaits your full suite of skills.",
+          "You've got rhythm! Your melody is forming, but the crescendo of mastery is still ahead.",
       };
-    } else if (finalTime <= 43) {
+    } else if (score >= 30) {
       return {
         level: 'Rookie Rhapsodist',
         comment:
-          'Your musical journey is underway, and every practice is a step toward your solo debut. Keep the tempo!',
+          'Your musical journey is taking shape. Every practice brings you closer to your debut.',
       };
     } else {
       return {
         level: 'Aspiring Artist',
         comment:
-          "Every great artist started with a single note. Keep practicing, and you'll compose your masterpiece.",
+          "The path to greatness starts with a single note. Keep practicing, and you'll find your symphony.",
       };
     }
   }
@@ -51,7 +63,9 @@ function QuizSummary({ finalTime, handleRestart }) {
         {level} level
       </Typography>
       <Typography className="mb-6">
-        Hooray! You got 10 notes correct in {finalTime} seconds.
+        You got 10 notes correct in {finalTime} seconds, that's{' '}
+        <span className="font-bold text-4xl text-blue-500">{finalScore}</span>{' '}
+        points
       </Typography>
       <Typography> {comment}</Typography>
       <Button onClick={handleRestart} className="mt-8">

@@ -1,4 +1,3 @@
-// Music.jsx
 import { useState, useEffect } from 'react';
 
 import {
@@ -18,20 +17,13 @@ function Music({ onQuizFinish }) {
   const [currentNote, setCurrentNote] = useState({});
   const [correctCount, setCorrectCount] = useState(0);
   const [wrongCount, setWrongCount] = useState(0);
+  const [score, setScore] = useState(0);
+  const [consecutiveCorrect, setConsecutiveCorrect] = useState(0);
+  const [isDisabled, setIsDisabled] = useState(false);
 
   useEffect(() => {
     pickRandomNote(notesData.notes);
   }, []);
-
-  useEffect(() => {
-    if (correctCount >= 10) {
-      // Check if correctCount has reached the limit
-      const soundPath = '/sounds/win.mp3';
-      const sound = new Audio(soundPath);
-      sound.play();
-      onQuizFinish(); // Call the function passed as prop to handle quiz finish
-    }
-  }, [correctCount, onQuizFinish]); // Add onQuizFinish to the dependency array if it might change, otherwise it can be omitted
 
   const pickRandomNote = (notes) => {
     const note = notes[Math.floor(Math.random() * notes.length)];
@@ -40,18 +32,33 @@ function Music({ onQuizFinish }) {
   };
 
   const handleNoteSelection = (note) => {
+    if (isDisabled) return;
     let soundPath;
     const isCorrect = note === currentNote.note;
     if (isCorrect) {
+      const newPoints = 5 + consecutiveCorrect;
+      setScore((prevScore) => Math.max(0, prevScore + newPoints));
+      setConsecutiveCorrect((prev) => prev + 1);
       setCorrectCount(correctCount + 1);
       soundPath = '/sounds/correct.mp3';
     } else {
       setWrongCount(wrongCount + 1);
+      setScore((prevScore) => Math.max(0, prevScore - 3));
+      setConsecutiveCorrect(0);
       soundPath = '/sounds/wrong.mp3';
+      setTimeout(() => setIsDisabled(false), 2000);
+      setIsDisabled(true);
     }
     const sound = new Audio(soundPath);
     sound.play();
     pickRandomNote(notesData.notes);
+    if (correctCount + 1 >= 10) {
+      onQuizFinish(score);
+      const soundPath = '/sounds/win.mp3';
+      const sound = new Audio(soundPath);
+      sound.play();
+      onQuizFinish(score);
+    }
   };
 
   return (
@@ -81,6 +88,7 @@ function Music({ onQuizFinish }) {
                 key={note}
                 className="rounded-full"
                 onClick={() => handleNoteSelection(note)}
+                disabled={isDisabled}
               >
                 {note}
               </Button>
@@ -92,6 +100,7 @@ function Music({ onQuizFinish }) {
                 key={note}
                 className="rounded-full"
                 onClick={() => handleNoteSelection(note)}
+                disabled={isDisabled}
               >
                 {note}
               </Button>

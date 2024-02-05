@@ -11,15 +11,17 @@ function App() {
   const [quizStarted, setQuizStarted] = useState(false);
   const [quizFinished, setQuizFinished] = useState(false);
   const [finalTime, setFinalTime] = useState(0);
+  const [finalScore, setFinalScore] = useState(0);
 
   const handleQuizStart = () => {
     setQuizStarted(true);
     setQuizFinished(false);
   };
 
-  const onQuizFinish = () => {
+  const onQuizFinish = (score) => {
+    setFinalScore(score);
     setQuizFinished(true);
-    setQuizStarted(false); // This will stop the timer in your Timer component
+    setQuizStarted(false); // This will stop the timer
   };
 
   const handleTimeUpdate = (currentTime) => {
@@ -46,7 +48,11 @@ function App() {
       )}
       {quizFinished && (
         <>
-          <QuizSummary finalTime={finalTime} handleRestart={handleRestart} />
+          <QuizSummary
+            finalTime={finalTime}
+            finalScore={finalScore}
+            handleRestart={handleRestart}
+          />
         </>
       )}
     </div>

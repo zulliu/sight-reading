@@ -1,4 +1,3 @@
-// Status.jsx
 import { Typography } from '@material-tailwind/react';
 function Status({ correctCount, wrongCount }) {
   return (
