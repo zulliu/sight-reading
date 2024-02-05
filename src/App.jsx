@@ -31,7 +31,7 @@ function App() {
     setFinalTime(0);
   };
   return (
-    <>
+    <div className="w-80">
       {!quizStarted && !quizFinished && <StartPage onStart={handleQuizStart} />}
 
       {quizStarted && (
@@ -48,10 +48,11 @@ function App() {
           <Typography variant="h3">
             Hooray, you got 10 notes correct in {finalTime} seconds. Try again?
           </Typography>
+          <br />
           <Button onClick={handleQuizStart}>Restart Quiz</Button>
         </>
       )}
-    </>
+    </div>
   );
 }
 
