@@ -31,6 +31,15 @@ function Music({ onQuizFinish }) {
     setCurrentNote({ ...note, selectedImage: `./images/${image}` });
   };
 
+  useEffect(() => {
+    if (correctCount >= 10) {
+      const soundPath = '/sounds/win.mp3';
+      const sound = new Audio(soundPath);
+      sound.play();
+      onQuizFinish(score);
+    }
+  }, [correctCount, score, onQuizFinish]);
+
   const handleNoteSelection = (note) => {
     if (isDisabled) return;
     let soundPath;
@@ -52,13 +61,6 @@ function Music({ onQuizFinish }) {
     const sound = new Audio(soundPath);
     sound.play();
     pickRandomNote(notesData.notes);
-    if (correctCount + 1 >= 10) {
-      onQuizFinish(score);
-      const soundPath = '/sounds/win.mp3';
-      const sound = new Audio(soundPath);
-      sound.play();
-      onQuizFinish(score);
-    }
   };
 
   return (

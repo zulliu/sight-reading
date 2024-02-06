@@ -1,9 +1,16 @@
+import { useState, useEffect } from 'react';
 import { Typography, Button } from '@material-tailwind/react';
 
 function QuizSummary({ finalTime, finalScore, handleRestart }) {
-  const { level, comment } = getLevel(
-    calculateFinalScore(finalScore, finalTime),
-  );
+  const [total, setTotal] = useState(0);
+  const { level, comment } = getLevel(total);
+
+  useEffect(() => {
+    // This function now runs once on component mount or when finalScore or finalTime changes
+    const totalScore = calculateFinalScore(finalScore, finalTime);
+    setTotal(totalScore); // Update the state here
+  }, [finalScore, finalTime]); // Dependencies array ensures effect runs on changes to these values
+
   function calculateFinalScore(baseScore, finalTime) {
     let timeBonus = 0;
     if (finalTime <= 15) timeBonus = 30;
@@ -64,8 +71,7 @@ function QuizSummary({ finalTime, finalScore, handleRestart }) {
       </Typography>
       <Typography className="mb-6">
         You got 10 notes correct in {finalTime} seconds, that's{' '}
-        <span className="font-bold text-4xl text-blue-500">{finalScore}</span>{' '}
-        points
+        <span className="font-bold text-4xl text-blue-500">{total}</span> points
       </Typography>
       <Typography> {comment}</Typography>
       <Button onClick={handleRestart} className="mt-8">
