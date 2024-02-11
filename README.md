@@ -17,19 +17,19 @@ This project is designed to help beginners improve their sight-reading skills. I
 
 To set up the sight-reading project locally:
 
-<<<
+```
 git clone https://github.com/zulliu/sight-reading.git
 cd sight-reading-project
 npm install
-<<<
+```
 
 ### Running the Project
 
 To start the project on your local machine:
 
-<<<
+```
 npm run dev
-<<<
+```
 
 This command will launch the project in your default web browser.
 
