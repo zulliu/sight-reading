@@ -41,7 +41,7 @@ function App() {
       {!quizStarted && !quizFinished && (
         <>
           {' '}
-          <div className="absolute top-4 left-12">
+          <div className="top-4 w-full">
             <ButtonGroup variant="outlined">
               <Button
                 size="sm"
