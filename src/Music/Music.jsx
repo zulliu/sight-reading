@@ -10,8 +10,12 @@ import {
   ButtonGroup,
 } from '@material-tailwind/react';
 import notesData from './notes.json';
-
 import Status from './Status';
+import {
+  playCorrectSound,
+  playWrongSound,
+  playWinSound,
+} from '../utils/playSound';
 
 function Music({ onQuizFinish }) {
   const [currentNote, setCurrentNote] = useState({});
@@ -33,33 +37,29 @@ function Music({ onQuizFinish }) {
 
   useEffect(() => {
     if (correctCount >= 10) {
-      const soundPath = '/sounds/win.mp3';
-      const sound = new Audio(soundPath);
-      sound.play();
+      playWinSound();
       onQuizFinish(score);
     }
   }, [correctCount, score, onQuizFinish]);
 
   const handleNoteSelection = (note) => {
     if (isDisabled) return;
-    let soundPath;
     const isCorrect = note === currentNote.note;
     if (isCorrect) {
       const newPoints = 5 + consecutiveCorrect;
       setScore((prevScore) => Math.max(0, prevScore + newPoints));
       setConsecutiveCorrect((prev) => prev + 1);
       setCorrectCount(correctCount + 1);
-      soundPath = '/sounds/correct.mp3';
+      playCorrectSound();
     } else {
       setWrongCount(wrongCount + 1);
       setScore((prevScore) => Math.max(0, prevScore - 3));
       setConsecutiveCorrect(0);
-      soundPath = '/sounds/wrong.mp3';
+      playWrongSound();
       setTimeout(() => setIsDisabled(false), 2000);
       setIsDisabled(true);
     }
-    const sound = new Audio(soundPath);
-    sound.play();
+
     pickRandomNote(notesData.notes);
   };
 

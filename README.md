@@ -1,6 +1,6 @@
 # Sight Reading Practice
 
-This project is designed to help beginners to improve their sight-reading skills. It offers a fast and interactive way to practice recognizing common notes directly from your phone or web browser. Check this [Demo](2-13-52-185-193.us-west-1.compute.amazonaws.com:3156) here.
+This project is designed to help beginners to improve their sight-reading skills. It offers a fast and interactive way to practice recognizing common notes directly from your phone or web browser. Check this [Demo](http://ec2-13-52-185-193.us-west-1.compute.amazonaws.com:3156/) here.
 
 ## Description
 

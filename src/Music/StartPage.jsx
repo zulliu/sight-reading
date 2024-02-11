@@ -1,7 +1,6 @@
-// StartPage.jsx
-import React, { useState, useEffect } from 'react';
-import { Button, Typography, Card } from '@material-tailwind/react';
-
+import { useState, useEffect } from 'react';
+import { Button, Typography } from '@material-tailwind/react';
+import { playStartSound } from '../utils/playSound';
 function StartPage({ onStart }) {
   const [countdown, setCountdown] = useState(null);
 
@@ -16,9 +15,7 @@ function StartPage({ onStart }) {
   }, [countdown, onStart]);
 
   const startCountdown = () => {
-    const soundPath = '/sounds/countdown.mp3';
-    const sound = new Audio(soundPath);
-    sound.play();
+    playStartSound();
     setCountdown(3); // Start countdown from 3
   };
 

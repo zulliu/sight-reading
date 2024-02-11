@@ -1,28 +1,25 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Typography } from '@material-tailwind/react';
 
 function Timer({ quizStarted, onTimeUpdate }) {
   const [time, setTime] = useState(0);
+  const intervalRef = useRef(null);
 
   useEffect(() => {
-    let interval = null;
-
     if (quizStarted) {
-      interval = setInterval(() => {
-        setTime((time) => time + 1);
+      intervalRef.current = setInterval(() => {
+        setTime((prevTime) => {
+          const newTime = prevTime + 1;
+          onTimeUpdate(newTime);
+          return newTime;
+        });
       }, 1000);
     } else {
-      clearInterval(interval);
+      clearInterval(intervalRef.current); // Clear the interval when quiz is not started
     }
 
-    return () => clearInterval(interval);
-  }, [quizStarted]);
-
-  useEffect(() => {
-    if (quizStarted) {
-      onTimeUpdate(time);
-    }
-  }, [time, quizStarted, onTimeUpdate]);
+    return () => clearInterval(intervalRef.current); // Cleanup on component unmount
+  }, [quizStarted, onTimeUpdate]);
 
   useEffect(() => {
     if (!quizStarted) {
