@@ -5,7 +5,7 @@ import Music from './Music/Music';
 import Timer from './Music/Timer';
 import StartPage from './Music/StartPage';
 import QuizSummary from './Music/QuizSummary';
-import { Button } from '@material-tailwind/react';
+import { Button, ButtonGroup } from '@material-tailwind/react';
 import PitchGame from './Music/PitchGame';
 
 function App() {
@@ -40,25 +40,38 @@ function App() {
     <div className="flex flex-col items-center justify-center min-h-screen w-full">
       {!quizStarted && !quizFinished && (
         <>
+          {' '}
+          <div className="absolute top-4 left-12">
+            <ButtonGroup variant="outlined">
+              <Button
+                size="sm"
+                onClick={() => setGameMode('button')}
+                className={`w-28 h-10 border-2 flex justify-center items-center ${
+                  gameMode === 'button'
+                    ? 'border-green-500 '
+                    : 'border-gray-300 '
+                }`}
+              >
+                Button Mode
+              </Button>
+              <Button
+                size="sm"
+                onClick={() => setGameMode('pitchGame')}
+                className={`w-28 h-10 border-2 flex justify-center items-center ${
+                  gameMode === 'pitchGame'
+                    ? 'border-green-500 '
+                    : 'border-gray-300 '
+                }`}
+              >
+                Play Mode
+              </Button>
+            </ButtonGroup>
+          </div>
           <StartPage onStart={handleQuizStart} />
-          <Button
-            onClick={() => setGameMode('music')}
-            variant="outlined"
-            className="mt-4"
-          >
-            Button Mode
-          </Button>
-          <Button
-            onClick={() => setGameMode('pitchGame')}
-            variant="outlined"
-            className="mt-4"
-          >
-            Play Mode
-          </Button>
         </>
       )}
 
-      {quizStarted && gameMode === 'music' && (
+      {quizStarted && gameMode === 'button' && (
         <>
           <Timer quizStarted={quizStarted} onTimeUpdate={handleTimeUpdate} />
           <Music onQuizFinish={onQuizFinish} />
